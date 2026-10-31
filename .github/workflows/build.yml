@@ -1,0 +1,19 @@
+name: macOS checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core checks
+        run: ./scripts/swift.sh run CoreChecks
+      - name: Package native app
+        run: ./scripts/build-app.sh
