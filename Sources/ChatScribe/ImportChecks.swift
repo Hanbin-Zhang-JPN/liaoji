@@ -41,7 +41,7 @@ enum ImportChecks {
         let multi = CheckPromise(files: [("third.png", a), ("fourth.png", b)], delay: 0.01)
         let failed = CheckPromise(files: [], delay: 0.01, fails: true)
         output = []; errors = []; finished = false
-        PhotoDropReader.receivePromises([slow, fast, multi, failed]) { inputs, failures in output = inputs; errors = failures; finished = true }
+        _ = PhotoDropReader.receivePromises([slow, fast, multi, failed]) { inputs, failures in output = inputs; errors = failures; finished = true }
         let deadline = Date().addingTimeInterval(5)
         while !finished && Date() < deadline { try await Task.sleep(nanoseconds: 10_000_000) }
         try verify(finished, "异步接收必须完成")
